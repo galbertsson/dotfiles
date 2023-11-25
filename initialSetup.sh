@@ -16,7 +16,8 @@ sudo apt install fuse -y
 sudo apt install build-essential -y 
 sudo apt install python3 -y 
 sudo apt-get install python3-pip -y 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+source ~/.bashrc
 nvm install --lts 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y 
 
