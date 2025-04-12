@@ -62,6 +62,15 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
+-- Paste but dont overwriting paste register
+vim.keymap.set("v", "<leader>p", [["_dP]])
+
+-- Move lines up and down
+vim.keymap.set("v", "<A-Down>", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "<A-Up>", ":m '<-2<CR>gv=gv")
+vim.keymap.set("n", "<A-Up>", ":m .-2<CR>==")
+vim.keymap.set("n", "<A-Down>", ":m .+1<CR>==")
+
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -101,6 +110,14 @@ require("lazy").setup({
 					vim.keymap.set("n", "<leader>gb", function()
 						gitSigns.blame_line({ full = true })
 					end, { buffer = buffer, desc = "[G]it [b]lame" })
+
+					vim.keymap.set("n", "gn", function()
+						gitSigns.nav_hunk("next")
+					end, { buffer = buffer, desc = "[G]it [n]ext hunk" })
+
+					vim.keymap.set("n", "gp", function()
+						gitSigns.nav_hunk("prev")
+					end, { buffer = buffer, desc = "[G]it [p]rev hunk" })
 				end,
 			})
 		end,
@@ -188,12 +205,12 @@ require("lazy").setup({
 					},
 				},
 				defaults = {
-				      path_display = {
+					path_display = {
 						filename_first = {
-						  reverse_directories = false,
+							reverse_directories = false,
 						},
-				}	
-			},
+					}
+				},
 			})
 
 			-- Enable Telescope extensions if they are installed
@@ -210,7 +227,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-			vim.keymap.set("n", "<leader>gs","<cmd>Telescope git_status<CR>", { desc = "[G]it [s]tatus"})
+			vim.keymap.set("n", "<leader>gs", "<cmd>Telescope git_status<CR>", { desc = "[G]it [s]tatus" })
 			-- vim.keymap.set("n", "<ledaer>gs", builtin.git_status, { desc = "[G]it [s]tatus"})
 		end,
 	},
@@ -527,9 +544,25 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>ha", function()
 				harpoon:list():add()
 			end, { desc = "[H]arpoon [a]dd" })
+
 			vim.keymap.set("n", "<leader>hl", function()
 				harpoon.ui:toggle_quick_menu(harpoon:list())
 			end, { desc = "[H]arpoon [l]ist" })
+
+			vim.keymap.set("n", "<A-1>", function()
+				harpoon:list():select(1)
+			end, { desc = "[H]arpoon 1" })
+
+			vim.keymap.set("n", "<A-2>", function()
+				harpoon:list():select(2)
+			end, { desc = "[H]arpoon 2" })
+
+			vim.keymap.set("n", "<A-3>", function()
+				harpoon:list():select(3)
+			end, { desc = "[H]arpoon 3" })
+			vim.keymap.set("n", "<A-4>", function()
+				harpoon:list():select(4)
+			end, { desc = "[H]arpoon 4" })
 		end,
 	},
 	{
