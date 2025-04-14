@@ -91,7 +91,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-	{            -- Adds git related signs to the gutter, as well as utilities for managing changes
+	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
 		opts = {
 			signs = {
@@ -110,7 +110,9 @@ require("lazy").setup({
 					vim.keymap.set("n", "<leader>gb", function()
 						gitSigns.blame_line({ full = true })
 					end, { buffer = buffer, desc = "[G]it [b]lame" })
-
+					vim.keymap.set("n", "<leader>gr", function()
+						gitSigns.preview_hunk()
+					end, { buffer = buffer, desc = "[G]it show [r]ow changes" })
 					vim.keymap.set("n", "gn", function()
 						gitSigns.nav_hunk("next")
 					end, { buffer = buffer, desc = "[G]it [n]ext hunk" })
@@ -122,7 +124,7 @@ require("lazy").setup({
 			})
 		end,
 	},
-	{             -- Useful plugin to show you pending keybinds.
+	{  -- Useful plugin to show you pending keybinds.
 		"folke/which-key.nvim",
 		event = "VimEnter", -- Sets the loading event to 'VimEnter'
 		opts = {
@@ -209,7 +211,10 @@ require("lazy").setup({
 						filename_first = {
 							reverse_directories = false,
 						},
-					}
+					},
+					layout_config = {
+						width = 0.9,
+					},
 				},
 			})
 
@@ -263,18 +268,14 @@ require("lazy").setup({
 				callback = function(event)
 					local map = function(keys, func, desc, mode)
 						mode = mode or "n"
-						vim.keymap.set(mode, keys, func,
-							{ buffer = event.buf, desc = "LSP: " .. desc })
+						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 					end
 
 					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
 					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-					map("gI", require("telescope.builtin").lsp_implementations,
-						"[G]oto [I]mplementation")
-					map("<leader>D", require("telescope.builtin").lsp_type_definitions,
-						"Type [D]efinition")
-					map("<leader>ds", require("telescope.builtin").lsp_document_symbols,
-						"[D]ocument [S]ymbols")
+					map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+					map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 					map(
 						"<leader>ws",
 						require("telescope.builtin").lsp_dynamic_workspace_symbols,
@@ -286,8 +287,7 @@ require("lazy").setup({
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 						local highlight_augroup =
-						    vim.api.nvim_create_augroup("kickstart-lsp-highlight",
-							    { clear = false })
+								vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
@@ -301,14 +301,12 @@ require("lazy").setup({
 						})
 
 						vim.api.nvim_create_autocmd("LspDetach", {
-							group = vim.api.nvim_create_augroup("kickstart-lsp-detach",
-								{ clear = true }),
+							group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
 							callback = function(event2)
 								vim.lsp.buf.clear_references()
 								vim.api.nvim_clear_autocmds({
-									group =
-									"kickstart-lsp-highlight",
-									buffer = event2.buf
+									group = "kickstart-lsp-highlight",
+									buffer = event2.buf,
 								})
 							end,
 						})
@@ -317,8 +315,7 @@ require("lazy").setup({
 			})
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = vim.tbl_deep_extend("force", capabilities,
-				require("cmp_nvim_lsp").default_capabilities())
+			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 			local servers = {
 				lua_ls = {
 					settings = {
@@ -348,8 +345,7 @@ require("lazy").setup({
 						-- This handles overriding only values explicitly passed
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for ts_ls)
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
-							server.capabilities or {})
+						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
@@ -590,12 +586,15 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
-			require("nvim-tree").setup {}
-			vim.api.nvim_set_keymap("n", "<leader>e", ":NvimTreeToggle<cr>",
-				{ silent = true, noremap = true, desc = "[E]xplorer" })
+			require("nvim-tree").setup({})
+			vim.api.nvim_set_keymap(
+				"n",
+				"<leader>e",
+				":NvimTreeFindFileToggle<cr>",
+				{ silent = true, noremap = true, desc = "[E]xplorer" }
+			)
 		end,
-	}
-
+	},
 }, {
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
