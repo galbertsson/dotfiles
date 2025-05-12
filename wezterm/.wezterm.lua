@@ -69,7 +69,7 @@ config.keys = {
 				"-Command",
 				[[
         cd $env:USERPROFILE\Documents\Repos;
-        $selection = Get-ChildItem -Directory | ForEach-Object { $_.FullName } | ./fzf;
+        $selection = Get-ChildItem -Directory | ForEach-Object { $_.FullName } | fzf;
         if ($selection) {
           Set-Content "temp_wezterm_workspace_selection.txt" $selection
         }
