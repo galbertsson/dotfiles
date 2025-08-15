@@ -67,7 +67,8 @@ sudo pacman -S --noconfirm gsimplecal
 sudo pacman -S --noconfirm i3lock
 sudo pacman -S --noconfirm picom
 sudo pacman -S --noconfirm polybar
-sudo yay -S --noconfirm autotiling
+yay -S --noconfirm autotiling
+sudo pacman -S redshift
 
 ##
 ## Tools
