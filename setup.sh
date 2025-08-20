@@ -46,8 +46,14 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ## Remoting tools
 ##
 sudo pacman -S --noconfirm mosh
-sudo pacman -S --noconfirm xorgxrdp
-sudo pacman -S --noconfirm xrdp
+sudo firewall-cmd --permanent --add-port=60000-61000/udp
+
+yay -S --noconfirm xorgxrdp
+yay -S --noconfirm xrdp
+sudo firewall-cmd --permanent --add-port=3389/tcp
+
+sudo firewall-cmd --reload
+
 # Enable and start sshd
 sudo systemctl enable sshd
 sudo systemctl start sshd

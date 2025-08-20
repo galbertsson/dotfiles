@@ -326,7 +326,7 @@ client.unfocused	    	$darkblue	$darkblue	$grey		$darkgrey	$darkgrey
 client.focused_inactive		$darkblue	$darkblue	$grey		$black		$black
 client.urgent		    	$urgentred	$urgentred	$white		$yellowbrown	$yellowbrown
 
-exec --no-startup-id $HOME/.config/polybar/launch.sh
+exec --no-startup-id ~/.config/polybar/launch.sh
 # Adjust to location
 exec --no-startup-id redshift -l 0:0
 
