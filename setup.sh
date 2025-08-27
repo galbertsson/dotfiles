@@ -88,3 +88,10 @@ sudo pacman -S --noconfirm stow
 # From AUR, not in official repository
 yay -S --noconfirm docker-desktop
 yay -S --noconfirm ghostty
+
+##
+## BTRFS snapshots and restoring
+##
+sudo pacman -S --noconfirm timeshift
+sudo pacman -S --noconfirm grub-btrfs
+yay -S --noconfirm timeshift-autosnap

@@ -1,0 +1,1 @@
+bind -x '"\es": ~/.local/scripts/tmux-sessionizer.sh'
