@@ -22,7 +22,18 @@ fi
 Because of the structure in this repo the following needs to be run:
 `stow -t ~/.config .config`
 
-3. Make sure automatic BTRFS backup is setup. Run the wizard in timeshift
+Link `bash/.bashrc.d`
+`stow -t ~ bash`
+
+Link `scripts/.local`
+`stow -t ~ scripts`
+
+3. Make following files executable
+`.local/scripts/tmux-sessionizer.sh`
+`.config/polybar/launch.sh`
+
+4. Make sure automatic BTRFS backup is setup. Run the wizard in timeshift
+Snapshot type: BTRFS
 
 Also setup grub-btrfs.
 `systemctl edit --full grub-btrfsd`
@@ -31,3 +42,6 @@ And change
 `ExecStart=/usr/bin/grub-btrfsd /.snapshots --syslog`
 to
 `ExecStart=/usr/bin/grub-btrfsd --syslog --timeshift-auto`
+
+Enable grub-btrfs service
+`sudo systemctl enable --now grub-btrfsd`
