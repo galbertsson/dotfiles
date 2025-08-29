@@ -96,6 +96,5 @@ sudo pacman -S --noconfirm timeshift
 sudo pacman -S --noconfirm grub-btrfs
 yay -S --noconfirm timeshift-autosnap
 sudo pacman -S --noconfirm cronie 
-sudo pacman -S --noconfirm intofy-tools
-
+sudo pacman -S --noconfirm inotify-tools
 sudo systemctl enable --now cronie
