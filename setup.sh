@@ -66,6 +66,9 @@ sudo systemctl start xrdp
 sudo systemctl enable xrdp-sesman
 sudo systemctl start xrdp-sesman
 
+# Set i3 as DE for xrdp
+echo "exec i3" > ~/.xinitrc
+
 ##
 ## Desktop environment
 ##
@@ -73,7 +76,7 @@ sudo pacman -S --noconfirm gsimplecal
 sudo pacman -S --noconfirm i3lock
 sudo pacman -S --noconfirm picom
 sudo pacman -S --noconfirm polybar
-yay -S --noconfirm autotiling
+sudo pacman -S --noconfirm autotiling
 sudo pacman -S redshift
 
 ##
@@ -83,11 +86,11 @@ sudo pacman -S --noconfirm tmux
 sudo pacman -S --noconfirm stow
 # Stow command, run once in each config that should be linked. For example run from ~/repos/dotfiles/nvim
 # stow -t ~/.config .config/
+sudo pacman -S --noconfirm ghostty
 
 
 # From AUR, not in official repository
 yay -S --noconfirm docker-desktop
-yay -S --noconfirm ghostty
 
 ##
 ## BTRFS snapshots and restoring
