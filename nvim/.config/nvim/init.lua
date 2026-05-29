@@ -186,6 +186,8 @@ do
 			changedelete = { text = "~" }, ---@diagnostic disable-line: missing-fields
 		},
 		on_attach = function(buffer)
+      local gitSigns = require("gitsigns")
+
 			vim.keymap.set("n", "<leader>gb", function()
 				gitSigns.blame_line({ full = true })
 			end, { buffer = buffer, desc = "[G]it [b]lame" })
@@ -668,6 +670,7 @@ do
 	vim.pack.add({ { src = gh("saghen/blink.cmp"), version = vim.version.range("1.*") } })
 	require("blink.cmp").setup({
 		keymap = {
+        ["<CR>"] = { 'select_and_accept', 'fallback' },
 			-- 'default' (recommended) for mappings similar to built-in completions
 			--   <c-y> to accept ([y]es) the completion.
 			--    This will auto-import if your LSP supports it.
