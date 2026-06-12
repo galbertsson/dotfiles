@@ -380,7 +380,7 @@ do
 			vim.keymap.set("n", "gr", builtin.lsp_references, { buffer = buf, desc = "[G]oto [R]eferences" })
 			vim.keymap.set("n", "gI", builtin.lsp_implementations, { buffer = buf, desc = "[G]oto [I]mplementation" })
 			vim.keymap.set("n", "cr", vim.lsp.buf.rename, { buffer = buf, desc = "[C]ode [R]ename" })
-			vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = buf, desc = "[C]ode [R]ename" })
+			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = buf, desc = "[C]ode [A]ction" })
 
 			vim.keymap.set("n", "gO", builtin.lsp_document_symbols, { buffer = buf, desc = "Open Document Symbols" })
 
